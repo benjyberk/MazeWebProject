@@ -19,6 +19,18 @@ namespace MazeWebProject
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "GenerateMaze",
+                routeTemplate: "api/{controller}/{name}/{rows}/{columns}"
+                //defaults: new { id = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "SolveMaze",
+                routeTemplate: "api/{controller}/{name}/{algorithm}"
+            //defaults: new { id = RouteParameter.Optional }
+            );
         }
     }
 }
