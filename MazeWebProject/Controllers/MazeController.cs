@@ -37,11 +37,65 @@ namespace MazeWebProject.Controllers
         }
 
         // GET: api/Maze/Benjy/0
-        public Solution<Position> GetSolution(string name, int algorithm)
+        public JObject GetSolution(string name, int algorithm)
         {
             Solution<Position> solution = model.SolveMaze(name, algorithm);
-            return solution;
+            JObject solutionObject = new JObject();
+
+            if (solution == null)
+            {
+                return null;
+            }
+            else
+            {
+                // A helper method is used to translate the list of positions into 'directions'
+                string directions = DirectionFromSolution(solution);
+                solutionObject["Solution"] = directions;
+                solutionObject["NodesEvaluated"] = solution.nodesEvaluated;
+            }
+
+            return solutionObject;
         }
+
+        private string DirectionFromSolution(Solution<Position> solution)
+        {
+            Position previous = solution.solutionPath[0].state;
+            string returnString = "";
+            // We skip the first element (which will always exist - the minimum amount of moves
+            // is 1
+            foreach (State<Position> p in solution.solutionPath.Skip(1))
+            {
+                if (p.state.Col == previous.Col)
+                {
+                    if (p.state.Row > previous.Row)
+                    {
+                        // Down
+                        returnString += "3";
+                    }
+                    else
+                    {
+                        // Up
+                        returnString += "2";
+                    }
+                }
+                else
+                {
+                    if (p.state.Col > previous.Col)
+                    {
+                        // Right
+                        returnString += "1";
+                    }
+                    else
+                    {
+                        // Left
+                        returnString += "0";
+                    }
+                }
+                previous = p.state;
+            }
+            return returnString;
+        }
+
 
         // POST: api/Maze
         public void Post([FromBody]string value)
