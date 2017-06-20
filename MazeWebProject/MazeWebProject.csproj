@@ -208,6 +208,7 @@
     <Content Include="Styles\bootstrap.min.css.map" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MazeController.cs" />
     <Compile Include="Global.asax.cs">

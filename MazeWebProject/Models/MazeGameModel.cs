@@ -7,7 +7,7 @@ using MazeLib;
 using System.Net.Sockets;
 using SearchAlgorithmsLib;
 using MazeGeneratorLib;
-
+using Newtonsoft.Json.Linq;
 
 namespace Models
 {
@@ -20,10 +20,12 @@ namespace Models
         private Dictionary<string, SearchableMaze> singlePlayerMazes;
         private Dictionary<string, Solution<Position>> singlePlayerSolutions;
         private Dictionary<string, MultiplayerMazeGame> multiplayerMazes;
-        private Dictionary<TcpClient, MultiplayerMazeGame> playerToGameMap;
+        private Dictionary<string, MultiplayerMazeGame> playerToGameMap;
         private BestFirstSearcher<Position> bfs;
         private DepthFirstSearcher<Position> dfs;
         private DFSMazeGenerator mazeMaker;
+
+        public event SendMessage UpdateClientEvent;
 
         /// <summary>
         /// The constructor generates the required objects
@@ -34,10 +36,12 @@ namespace Models
             singlePlayerMazes = new Dictionary<string, SearchableMaze>();
             singlePlayerSolutions = new Dictionary<string, Solution<Position>>();
             multiplayerMazes = new Dictionary<string, MultiplayerMazeGame>();
-            playerToGameMap = new Dictionary<TcpClient, MultiplayerMazeGame>();
+            playerToGameMap = new Dictionary<string, MultiplayerMazeGame>();
             bfs = new BestFirstSearcher<Position>();
             dfs = new DepthFirstSearcher<Position>();
         }
+
+
         /*
          * The generate command creates a single player maze, which is added to the database
          * and then returned to the user
@@ -104,33 +108,20 @@ namespace Models
          * StartGame creates a new multiplayer game, generating the maze and registering
          * the client to the game
          */
-        public void StartGame(string name, int rows, int cols, TcpClient user)
+        public void StartGame(string name, int rows, int cols, string user)
         {
             Maze baseMaze = mazeMaker.Generate(rows, cols);
             baseMaze.Name = name;
             SearchableMaze maze = new SearchableMaze(baseMaze, baseMaze.Name);
             MultiplayerMazeGame oneGame = new MultiplayerMazeGame(maze);
+            oneGame.SendMessageEvent += UpdateClientEvent;
 
             // We add the player to the game we just created
             oneGame.AddPlayer(user);
             // We place the maze into our database
-            if (!multiplayerMazes.ContainsKey(name))
-            {
-                multiplayerMazes.Add(name, oneGame);
-            }
-            else
-            {
-                multiplayerMazes[name] = oneGame;
-            }
+            multiplayerMazes[name] = oneGame;
 
-            if (!playerToGameMap.ContainsKey(user))
-            {
-                playerToGameMap.Add(user, oneGame);
-            }
-            else
-            {
-                playerToGameMap[user] = oneGame;
-            }
+            playerToGameMap[user] = oneGame;
         }
 
         /*
@@ -154,7 +145,7 @@ namespace Models
          * A method which joins a client to an existing multiplayer game
          * Returns false if no such game exists
          */
-        public bool JoinMultiplayerGame(string name, TcpClient player)
+        public bool JoinMultiplayerGame(string name, string player)
         {
             if (!multiplayerMazes.ContainsKey(name))
             {
@@ -178,7 +169,7 @@ namespace Models
          * The function checks if there is a player associated with a game, and if so, makes the
          * move for him
          */
-        public bool MakeMove(TcpClient player, string move)
+        public bool MakeMove(string player, string move)
         {
             if (!playerToGameMap.ContainsKey(player))
             {
@@ -191,7 +182,7 @@ namespace Models
         /*
          * This command cancels a multiplayer game 
          */
-        public bool CancelGame(TcpClient player)
+        public bool CancelGame(string player)
         {
             if (!playerToGameMap.ContainsKey(player))
             {
