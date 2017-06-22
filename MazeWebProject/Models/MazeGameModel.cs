@@ -155,7 +155,7 @@ namespace Models
             {
                 multiplayerMazes[name].AddPlayer(player);
                 // We associate the player with this game
-                playerToGameMap.Add(player, multiplayerMazes[name]);
+                playerToGameMap[player] = multiplayerMazes[name];
                 return true;
             }
             // If the game already has two players, it cannot be joined

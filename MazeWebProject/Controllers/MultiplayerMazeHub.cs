@@ -30,6 +30,17 @@ namespace MazeWebProject
             model.JoinMultiplayerGame(name, Context.ConnectionId);
         }
 
+        public void MakeMove(string direction)
+        {
+            model.MakeMove(Context.ConnectionId, direction);
+        }
+
+        public void GetList()
+        {
+            List<string> list = model.GetActiveGames();
+            Clients.Client(Context.ConnectionId).updateList(list);
+        }
+
         public void SendMessage(string id, JObject content)
         {
             if (content["Direction"] != null)
@@ -42,7 +53,7 @@ namespace MazeWebProject
             }
             else
             {
-                Clients.Client(id).exitGame();
+                //Clients.Client(id).exitGame();
             }
         }
         

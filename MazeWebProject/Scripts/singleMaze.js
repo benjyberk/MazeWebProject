@@ -21,12 +21,12 @@
                     console.log(data.Solution);
                     mazeboardObject.solve(data.Solution);
                 }
-            }
-            )
+            })            
     });
 
 
     $("#btnGenerate").click(function () {
+        $("#singlecanvas").drawMessage("Loading Maze...", "gold");
         apiUrl = "../api/Maze/" + $('#name').val() + "/" + $('#rows').val() + "/" + $('#columns').val();
         sessionStorage.setItem("mazeName", $('#name').val());
         $.getJSON(apiUrl).done(function (data) {
