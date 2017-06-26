@@ -4,6 +4,7 @@
     <title>Multiplayer Game</title>
 	<meta charset="utf-8" />
     <link href="/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="/Styles/loader.css" rel="stylesheet"/>
 </head>
 <body>
     <div id="Maze-Navbar"></div>
@@ -41,10 +42,12 @@
 
         </div>
         <div class="col-sm-4">
-            <canvas id="player1canvas" style="border: 2px solid #000000" width="350" height="350"/>
+            <div class="loader" style="display:none; margin:0 auto"></div>
+            <canvas id="player1canvas" class="maze" style="border: 2px solid #000000" width="350" height="350"/>
         </div>
         <div class="col-sm-4">
-            <canvas id="player2canvas" style="border: 2px solid #000000" width="350" height="350"/>
+            <div class="loader" style="display:none; margin:0 auto"></div>
+            <canvas id="player2canvas" class="maze" style="border: 2px solid #000000" width="350" height="350"/>
         </div>
     </div>
 

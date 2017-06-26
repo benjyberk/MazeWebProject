@@ -11,28 +11,27 @@ using System.Web.Http;
 
 namespace MazeWebProject.Controllers
 {
+    /// <summary>
+    /// The Maze controller handles all requests that require a generated/solved maze
+    /// </summary>
     public class MazeController : ApiController
     {
         private static IModel model = new MazeGameModel();
 
-        // GET: api/Maze
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Maze/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
+        /// <summary>
+        /// The GetGeneratedMaze function generates a maze using the model
+        /// </summary>
+        /// <param name="name">The maze name</param>
+        /// <param name="rows">Number of rows to generate</param>
+        /// <param name="columns">Number of columns to generate</param>
+        /// <returns></returns>
         // GET: api/Maze/Benjy/5/5
         public JObject GetGeneratedMaze(string name, int rows, int columns)
         {
             SearchableMaze m = model.GenerateMaze(name, rows, columns);
             string json = m.toJSON();
             Console.WriteLine(json);
+            // The maze is re-serialized and returned as a jObject (which is auto-converted to json)
             return JObject.Parse(json);
         }
 
@@ -41,7 +40,7 @@ namespace MazeWebProject.Controllers
         {
             Solution<Position> solution = model.SolveMaze(name, algorithm);
             JObject solutionObject = new JObject();
-
+            // If the solution exists we return it
             if (solution == null)
             {
                 return null;
@@ -57,6 +56,12 @@ namespace MazeWebProject.Controllers
             return solutionObject;
         }
 
+        /// <summary>
+        /// A helper method used to extract only the direction steps from
+        /// the 'solution', which is a collection of states
+        /// </summary>
+        /// <param name="solution">The generated solution</param>
+        /// <returns></returns>
         private string DirectionFromSolution(Solution<Position> solution)
         {
             Position previous = solution.solutionPath[0].state;
@@ -94,22 +99,6 @@ namespace MazeWebProject.Controllers
                 previous = p.state;
             }
             return returnString;
-        }
-
-
-        // POST: api/Maze
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Maze/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Maze/5
-        public void Delete(int id)
-        {
         }
     }
 }

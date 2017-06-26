@@ -177,6 +177,7 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\highscores.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
@@ -184,8 +185,11 @@
     <Content Include="Scripts\jQuery.mazeBoard.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
+    <Content Include="Scripts\login.js" />
     <Content Include="Scripts\multiplayerMaze.js" />
     <Content Include="Scripts\navbar.js" />
+    <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\settings.js" />
     <Content Include="Scripts\singleMaze.js" />
     <Content Include="Styles\bootstrap-theme.css" />
     <Content Include="Styles\bootstrap-theme.min.css" />
@@ -194,6 +198,7 @@
     <Resource Include="View\goal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Content Include="Styles\loader.css" />
     <Content Include="View\Highscores.html" />
     <Content Include="View\index.html" />
     <Content Include="View\Login.html" />
@@ -220,13 +225,21 @@
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MazeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706221806527_Initial.cs" />
+    <Compile Include="Migrations\201706221806527_Initial.Designer.cs">
+      <DependentUpon>201706221806527_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\MazeGameModel.cs" />
+    <Compile Include="Models\MazeWebProjectContext.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\MultiplayerMazeGame.cs" />
+    <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Models\SearchableMaze.cs" />
     <Compile Include="Controllers\MultiplayerMazeHub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -247,6 +260,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706221806527_Initial.resx">
+      <DependentUpon>201706221806527_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

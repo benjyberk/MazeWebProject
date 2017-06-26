@@ -4,29 +4,35 @@
     <title></title>
 	<meta charset="utf-8" />
     <link href="/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="/Styles/loader.css" rel="stylesheet" />
+
 </head>
 <body>
     <div id="Maze-Navbar"></div>
+        <div class="container">
+                <h1>
+                    Highscores<br />
+                    <small>These guys are very talented</small>
+                </h1>
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listbody">
+                    </tbody>
+                </table>
+            <div id="loading" class="loader" style="display:table; margin:0 auto"></div>
 
-    <div class="container">
-        <h1>Highscores<br />
-        <small>These guys are really cool</small></h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Wins</th>
-                    <th>Losses</th>
-                </tr>
-            </thead>
-            <tbody id="listbody"></tbody>
-        </table>
-    </div>
-
+            </div>
 
     <script src="/Scripts/jquery-3.1.1.js"></script>
     <script src="/Scripts/bootstrap.js"></script>
     <script src="/Scripts/navbar.js"></script>
+    <script src="/Scripts/highscores.js"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@
     <title>Single Player</title>
 	<meta charset="utf-8" />
     <link href="/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="/Styles/loader.css" rel="stylesheet" />
 </head>
 <body>
     <div id="Maze-Navbar"></div>
@@ -38,7 +39,8 @@
             <button class="btn btn-default" id="btnSolve">Solve Maze</button>
         </div>
         <div class="col-sm-8">
-            <canvas id="singlecanvas" style="border: 3px solid #000000" width="400" height="400"/>
+            <div id="loading" class="loader" style="display:none; margin:0 auto"></div>
+            <canvas id="singlecanvas" class="maze" style="border: 3px solid #000000" width="400" height="400"/>
         </div>
     </div>
 
